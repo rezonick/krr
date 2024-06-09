@@ -197,7 +197,7 @@ We do **not** recommend installing KRR from source in airgapped environments due
 2. Clone the repo:
 
 ```sh
-git clone https://github.com/robusta-dev/krr
+git clone https://github.com/rezonick/krr
 ```
 
 3. Navigate to the project root directory (`cd ./krr`)
