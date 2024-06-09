@@ -216,7 +216,11 @@ kubectl port-forward pod/<prom-sts> <prom-port> -n  <prom-namespace>
 6. Run the tool:
 
 ```sh
-python3 custom_strategy.py custom -p http://127.0.0.1:9090 --namespace <workload-namespace>
+# test 
+python3 rz_strategy.py --help
+
+# generate stats
+python3 rz_strategy.py rz -p http://127.0.0.1:9090 --namespace <workload-namespace>
 ```
 
 Notice that using source code requires you to run as a python script, when installing with brew allows to run `krr`.
