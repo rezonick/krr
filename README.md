@@ -193,7 +193,7 @@ We do **not** recommend installing KRR from source in airgapped environments due
 <details>
   <summary>From Source</summary>
 
-1. Make sure you have [Python 3.9](https://www.python.org/downloads/) (or greater) installed
+1. Make sure you have [Python 3.9](https://www.python.org/downloads/) (or greater) installed & the corresponding pip version
 2. Clone the repo:
 
 ```sh
@@ -207,10 +207,16 @@ git clone https://github.com/rezonick/krr
 pip install -r requirements.txt
 ```
 
-5. Run the tool:
+5. Get access to prometheus
 
 ```sh
-python krr.py --help
+kubectl port-forward pod/<prom-sts> <prom-port> -n  <prom-namespace>
+```
+
+6. Run the tool:
+
+```sh
+python3 custom_strategy.py custom -p http://127.0.0.1:9090 --namespace <workload-namespace>
 ```
 
 Notice that using source code requires you to run as a python script, when installing with brew allows to run `krr`.
