@@ -30,12 +30,12 @@ from robusta_krr.core.integrations.prometheus.metrics import (
 
 
 class SimpleStrategySettings(StrategySettings):
-    cpu_percentile: float = pd.Field(99, gt=0, le=100, description="The percentile to use for the CPU recommendation.")
+    cpu_percentile: float = pd.Field(60, gt=0, le=100, description="The percentile to use for the CPU recommendation.")
     memory_buffer_percentage: float = pd.Field(
-        15, gt=0, description="The percentage of added buffer to the peak memory usage for memory recommendation."
+        40, gt=0, description="The percentage of added buffer to the peak memory usage for memory recommendation."
     )
     memory_request_percentage: float = pd.Field(
-        80, gt=0, description="The percentage of the peak memory usage for memory recommendation."
+        65, gt=0, description="The percentage of the peak memory usage for memory recommendation."
     )
     points_required: int = pd.Field(
         100, ge=1, description="The number of data points required to make a recommendation for a resource."
@@ -187,7 +187,7 @@ class CustomStrategy(BaseStrategy[SimpleStrategySettings]):
             max_cpu_usage = np.max(data_)
         memory_usage = self.settings.calculate_request_memory_proposal(data, max_oomkill_value)
         memory_limit = self.settings.calculate_limit_memory_proposal(data, max_oomkill_value)
-        print(f'Max Memory Usage: {max_cpu_usage} Max OOM kill: {max_oomkill_value} Proposed Memory usage: {memory_usage}, Proposed Limit: {memory_limit}')
+        # print(f'Max Memory Usage: {max_cpu_usage} Max OOM kill: {max_oomkill_value} Proposed Memory usage: {memory_usage}, Proposed Limit: {memory_limit}')
 
         return ResourceRecommendation(
             request=memory_usage, limit=memory_limit, info="OOMKill detected" if oomkill_detected else None
