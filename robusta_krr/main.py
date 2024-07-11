@@ -19,7 +19,7 @@ from robusta_krr.core.models.config import Config
 from robusta_krr.core.runner import Runner
 from robusta_krr.utils.version import get_version
 
-app = typer.Typer(pretty_exceptions_show_locals=False, pretty_exceptions_short=True, no_args_is_help=True)
+app = typer.Typer(pretty_exceptions_show_locals=False, pretty_exceptions_short=True, no_args_is_help=True, help="IMPORTANT: Run `krr simple --help` to see all cli flags!")
 
 # NOTE: Disable insecure request warnings, as it might be expected to use self-signed certificates inside the cluster
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -234,7 +234,10 @@ def load_commands() -> None:
                     rich_help_panel="Logging Settings",
                 ),
                 file_output: Optional[str] = typer.Option(
-                    None, "--fileoutput", help="Print the output to a file", rich_help_panel="Output Settings"
+                    None, "--fileoutput", help="Filename to write output to (if not specified, file output is disabled)", rich_help_panel="Output Settings"
+                ),
+                file_output_dynamic: bool = typer.Option(
+                    False, "--fileoutput-dynamic", help="Ignore --fileoutput and write files to the current directory in the format krr-{datetime}.{format} (e.g. krr-20240518223924.csv)", rich_help_panel="Output Settings"
                 ),
                 slack_output: Optional[str] = typer.Option(
                     None,
@@ -279,6 +282,7 @@ def load_commands() -> None:
                         log_to_stderr=log_to_stderr,
                         width=width,
                         file_output=file_output,
+                        file_output_dynamic=file_output_dynamic,
                         slack_output=slack_output,
                         strategy=_strategy_name,
                         other_args=strategy_args,
