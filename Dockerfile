@@ -23,4 +23,4 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # Run the application using 'poetry run krr simple'
-CMD ["python", "krr.py", "simple"]
+ENTRYPOINT [ "python" ]
